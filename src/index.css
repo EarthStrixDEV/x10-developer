@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/*
+  X10 Developer — Claymorphism design tokens.
+  Every color, radius, and shadow used in the app pulls from here.
+  No component should hardcode a hex value or one-off shadow string.
+*/
+@theme {
+  --font-sans: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Fraunces", "Georgia", serif;
+
+  /* Cream (background) family */
+  --color-cream-light: #faf3e7;
+  --color-cream: #f5ede1;
+  --color-cream-dark: #e8dcc8;
+
+  /* Burnt orange / terracotta (primary accent) family */
+  --color-orange-light: #f0a578;
+  --color-orange: #e8703a;
+  --color-orange-dark: #c85a2a;
+
+  /* Charcoal (text / dark UI) family */
+  --color-charcoal-light: #6b6862;
+  --color-charcoal: #3a3a3a;
+  --color-charcoal-dark: #2e2c2a;
+
+  /* Clay radii — soft putty shapes, 24-32px range */
+  --radius-clay-sm: 18px;
+  --radius-clay: 24px;
+  --radius-clay-lg: 32px;
+  --radius-clay-full: 999px;
+}
+
+/*
+  Dark mode token overrides — applied when <html data-theme="dark"> is set
+  (see src/hooks/useTheme.ts; the attribute is fully removed, not set to
+  "light", when the theme is light). Only the cream (surface) and charcoal
+  (text) families are redefined here: cream flips to charcoal-based dark
+  surfaces, charcoal flips to cream-based light text, so every component
+  that already consumes these tokens re-themes with zero component changes.
+
+  Orange is intentionally NOT overridden — it stays byte-for-byte identical
+  in both modes per an explicit product decision (the constant accent).
+
+  One new intermediate charcoal tint (--color-cream-light's dark value,
+  #403d39) is introduced because the existing 3-step charcoal family only
+  gives two dark stops (#2e2c2a, #3a3a3a) with enough separation for
+  "page background" and "recessed/pressed" — elevated card surfaces need a
+  third, lighter stop to read as "raised" above the page background.
+*/
+:root[data-theme="dark"] {
+  /* Cream (surface) family → dark charcoal-based backgrounds.
+     Role mapping preserves each token's existing "how light" ordering:
+     cream-light (brightest) > cream (mid) > cream-dark (darkest). */
+  --color-cream-light: #403d39; /* elevated surface (new intermediate tint) */
+  --color-cream: #2e2c2a; /* page background / default card surface — reuses existing --color-charcoal-dark */
+  --color-cream-dark: #221f1d; /* recessed / pressed surface — darker than charcoal-dark for clear inset depth */
+
+  /* Charcoal (text) family → cream-based light text, keeping legibility
+     against the new dark surfaces. Same "how light" ordering is preserved
+     in reverse: charcoal-dark (brightest, was darkest) is now the primary
+     read as accent/heading text, charcoal (primary body text) reuses the
+     existing --color-cream-light value, charcoal-light (secondary/muted
+     text) dims down using the existing --color-cream-dark value so muted
+     text still reads clearly softer than primary text. */
+  --color-charcoal: #faf3e7; /* primary text — reuses existing --color-cream-light */
+  --color-charcoal-light: #e8dcc8; /* secondary/muted text — reuses existing --color-cream-dark */
+  --color-charcoal-dark: #fffaf1; /* brightest text stop, for any element wanting max contrast */
+}
+
+/*
+  Clay shadow system: a dark shadow sits to the bottom-right, a light
+  highlight sits to the top-left, producing the puffy embossed look.
+  "-raised" = resting state (card/button not pressed).
+  "-pressed" = active/hover-press state, shadow tucks inward + element
+  nudges toward the light source to fake being pushed into the clay.
+*/
+@utility shadow-clay-raised {
+  box-shadow:
+    8px 8px 16px rgba(58, 58, 58, 0.18),
+    -6px -6px 14px rgba(255, 255, 255, 0.75);
+}
+
+@utility shadow-clay-raised-sm {
+  box-shadow:
+    4px 4px 8px rgba(58, 58, 58, 0.16),
+    -3px -3px 7px rgba(255, 255, 255, 0.7);
+}
+
+@utility shadow-clay-pressed {
+  box-shadow:
+    inset 3px 3px 7px rgba(58, 58, 58, 0.22),
+    inset -3px -3px 7px rgba(255, 255, 255, 0.6);
+}
+
+@utility shadow-key {
+  box-shadow:
+    0 4px 0 rgba(58, 58, 58, 0.22),
+    2px 2px 6px rgba(58, 58, 58, 0.14),
+    -2px -2px 5px rgba(255, 255, 255, 0.65);
+}
+
+@utility shadow-key-pressed {
+  box-shadow:
+    0 1px 0 rgba(58, 58, 58, 0.22),
+    inset 2px 2px 5px rgba(58, 58, 58, 0.2);
+}
+
+/*
+  Dark-mode shadow overrides. Tailwind v4's @utility at-rule can't branch on
+  a data attribute internally, so instead of parameterizing the utilities
+  above, we override the compiled class names directly under the
+  [data-theme="dark"] selector. Same offsets/blur/composition as the
+  light-mode versions above — only the two shadow colors change:
+    - the "dark corner" shadow moves from rgba(58,58,58,*) (mid-gray, reads
+      as a shadow against light cream) to near-black rgba(0,0,0,*) at a
+      higher opacity, since a mid-gray shadow has almost no contrast against
+      an already-dark charcoal surface and would look flat/invisible.
+    - the "light corner" highlight moves from stark rgba(255,255,255,*) to a
+      dim warm-gray rgba(120,115,108,*) at low opacity — a full-white
+      highlight would read as a harsh glow/blown-out edge against a dark
+      surface; a soft light-gray still reads as "catching light" without
+      looking like a lit bulb.
+*/
+[data-theme="dark"] .shadow-clay-raised {
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.45),
+    -6px -6px 14px rgba(120, 115, 108, 0.18);
+}
+
+[data-theme="dark"] .shadow-clay-raised-sm {
+  box-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.4),
+    -3px -3px 7px rgba(120, 115, 108, 0.16);
+}
+
+[data-theme="dark"] .shadow-clay-pressed {
+  box-shadow:
+    inset 3px 3px 7px rgba(0, 0, 0, 0.5),
+    inset -3px -3px 7px rgba(120, 115, 108, 0.14);
+}
+
+[data-theme="dark"] .shadow-key {
+  box-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.55),
+    2px 2px 6px rgba(0, 0, 0, 0.35),
+    -2px -2px 5px rgba(120, 115, 108, 0.16);
+}
+
+[data-theme="dark"] .shadow-key-pressed {
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.55),
+    inset 2px 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
