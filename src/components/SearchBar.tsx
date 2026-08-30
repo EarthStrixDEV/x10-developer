@@ -3,7 +3,9 @@ import { Search } from "lucide-react";
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
-  placeholder?: string;
+  /** Presentational component — no i18n hook of its own. Callers pass the
+   *  localized placeholder text in (Hero.tsx sources it from useTranslation). */
+  placeholder: string;
   className?: string;
 }
 
@@ -16,7 +18,7 @@ interface SearchBarProps {
 export function SearchBar({
   value,
   onChange,
-  placeholder = "Search shortcuts...",
+  placeholder,
   className = "",
 }: SearchBarProps) {
   return (

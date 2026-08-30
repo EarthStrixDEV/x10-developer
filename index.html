@@ -11,6 +11,34 @@
         } catch (e) {}
       })();
     </script>
+    <script>
+      (function () {
+        try {
+          var lang = window.localStorage.getItem("x10-developer-language");
+          var valid = ["en", "th", "zh", "ko", "ja", "es", "fr"];
+          if (valid.indexOf(lang) === -1) lang = "en";
+          document.documentElement.lang = lang;
+          document.documentElement.setAttribute("data-lang", lang);
+        } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        var lang = document.documentElement.getAttribute("data-lang");
+        var fontMap = {
+          th: "Noto+Sans+Thai:wght@400;500;600;700",
+          zh: "Noto+Sans+SC:wght@400;500;600;700",
+          ko: "Noto+Sans+KR:wght@400;500;600;700",
+          ja: "Noto+Sans+JP:wght@400;500;600;700",
+        };
+        if (fontMap[lang]) {
+          var link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = "https://fonts.googleapis.com/css2?family=" + fontMap[lang] + "&display=swap";
+          document.head.appendChild(link);
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

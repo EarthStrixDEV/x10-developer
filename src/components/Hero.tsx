@@ -1,5 +1,6 @@
 import { Keyboard, MousePointerBan } from "lucide-react";
 import { SearchBar } from "./SearchBar";
+import { useTranslation } from "../i18n/useTranslation";
 
 interface HeroProps {
   query: string;
@@ -21,6 +22,8 @@ export function Hero({
   shortcutCount,
   categoryCount,
 }: HeroProps) {
+  const { t } = useTranslation();
+
   return (
     <section
       id="top"
@@ -47,25 +50,27 @@ export function Hero({
       <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-8 text-center">
         <span className="bg-cream shadow-clay-raised-sm text-charcoal-light inline-flex items-center gap-2 rounded-clay-full px-4 py-1.5 text-xs font-semibold tracking-[0.08em] uppercase">
           <MousePointerBan size={14} className="text-orange" />
-          Zero-mouse reference
+          {t.heroBadge}
         </span>
 
         <h1
           className="text-charcoal max-w-3xl text-5xl leading-[1.05] font-semibold sm:text-6xl md:text-7xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Work <em className="text-orange not-italic">10x</em> faster{" "}
-          <span className="italic">without touching the mouse.</span>
+          {t.heroHeadlinePart1}
+          <em className="text-orange not-italic">{t.heroHeadlineEmphasis}</em>
+          {t.heroHeadlinePart2}
+          <span className="italic">{t.heroHeadlineItalic}</span>
         </h1>
 
         <p className="text-charcoal-light max-w-xl text-lg text-balance sm:text-xl">
-          Every shortcut a keyboard-first developer actually needs — Windows
-          and Mac, side by side, in one soft and searchable cheat sheet.
+          {t.heroSubheadline}
         </p>
 
         <SearchBar
           value={query}
           onChange={onQueryChange}
+          placeholder={t.searchPlaceholder}
           className="w-full max-w-lg py-3.5 text-base"
         />
 
@@ -75,17 +80,17 @@ export function Hero({
             <strong className="text-charcoal font-semibold">
               {shortcutCount}+
             </strong>
-            shortcuts
+            {t.statShortcuts}
           </span>
           <span className="bg-charcoal-light/30 hidden h-4 w-px sm:inline-block" />
           <span>
             <strong className="text-charcoal font-semibold">
               {categoryCount}
             </strong>{" "}
-            categories
+            {t.statCategories}
           </span>
           <span className="bg-charcoal-light/30 hidden h-4 w-px sm:inline-block" />
-          <span>Windows &amp; Mac</span>
+          <span>{t.statPlatforms}</span>
         </div>
       </div>
     </section>

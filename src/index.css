@@ -153,6 +153,36 @@
     inset 2px 2px 5px rgba(0, 0, 0, 0.45);
 }
 
+/*
+  Language-based font overrides — applied when <html data-lang="..."> is set
+  to a non-Latin language (see src/i18n/useLanguage.ts). Fraunces and Figtree
+  ship zero glyph coverage for Thai/CJK scripts, so those languages need a
+  dedicated Noto Sans variant swapped into the same --font-sans/--font-display
+  tokens every component already consumes, the same way [data-theme="dark"]
+  swaps color tokens above — no component needs to know which language is
+  active. "en"/"es"/"fr" stay on the default tokens since they're Latin-script
+  and already fully covered by Fraunces/Figtree.
+*/
+[data-lang="th"] {
+  --font-sans: "Noto Sans Thai", "Figtree", system-ui, sans-serif;
+  --font-display: "Noto Sans Thai", "Fraunces", serif;
+}
+
+[data-lang="zh"] {
+  --font-sans: "Noto Sans SC", "Figtree", system-ui, sans-serif;
+  --font-display: "Noto Sans SC", "Fraunces", serif;
+}
+
+[data-lang="ko"] {
+  --font-sans: "Noto Sans KR", "Figtree", system-ui, sans-serif;
+  --font-display: "Noto Sans KR", "Fraunces", serif;
+}
+
+[data-lang="ja"] {
+  --font-sans: "Noto Sans JP", "Figtree", system-ui, sans-serif;
+  --font-display: "Noto Sans JP", "Fraunces", serif;
+}
+
 * {
   box-sizing: border-box;
 }

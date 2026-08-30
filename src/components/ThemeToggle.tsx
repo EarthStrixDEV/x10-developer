@@ -1,6 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 import { ClayButton } from "./clay/ClayButton";
 import { useTheme } from "../hooks/useTheme";
+import { useTranslation } from "../i18n/useTranslation";
 
 interface ThemeToggleProps {
   /** Render as a normal inline element (for use inside NavBar) instead of
@@ -19,9 +20,10 @@ interface ThemeToggleProps {
  */
 export function ThemeToggle({ inline = false }: ThemeToggleProps) {
   const [theme, setTheme] = useTheme();
+  const { t } = useTranslation();
   const isLight = theme === "light";
 
-  const label = isLight ? "Switch to dark mode" : "Switch to light mode";
+  const label = isLight ? t.themeToggleToDark : t.themeToggleToLight;
 
   return (
     <ClayButton

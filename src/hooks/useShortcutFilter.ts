@@ -1,13 +1,16 @@
 import { useMemo } from "react";
 import type { Category } from "../data/shortcuts";
+import type { Language } from "../i18n/languages";
+import { getLocalizedShortcut } from "../data/getLocalizedShortcut";
 
 /**
  * Filters `categories` by `query` across ALL categories simultaneously.
  *
  * Match rule: a shortcut matches if the lowercased query is a substring of
- * either its `description` (case-insensitive) or the joined key tokens for
- * the currently-active `os` — never the inactive OS's keys, since those
- * aren't what's rendered on screen.
+ * either its localized `description` (case-insensitive, resolved via
+ * `getLocalizedShortcut` for the currently-active `language`) or the joined
+ * key tokens for the currently-active `os` — never the inactive OS's keys,
+ * since those aren't what's rendered on screen.
  *
  * An empty/whitespace-only query short-circuits to the original categories
  * unfiltered. Otherwise, each category keeps only its matching shortcuts and
@@ -18,7 +21,8 @@ import type { Category } from "../data/shortcuts";
 export function useShortcutFilter(
   categories: Category[],
   query: string,
-  os: "windows" | "mac"
+  os: "windows" | "mac",
+  language: Language
 ): Category[] {
   return useMemo(() => {
     const trimmed = query.trim().toLowerCase();
@@ -31,9 +35,8 @@ export function useShortcutFilter(
 
     for (const category of categories) {
       const matchingShortcuts = category.shortcuts.filter((shortcut) => {
-        const descriptionMatch = shortcut.description
-          .toLowerCase()
-          .includes(trimmed);
+        const { description } = getLocalizedShortcut(shortcut, language);
+        const descriptionMatch = description.toLowerCase().includes(trimmed);
 
         const keys = os === "windows" ? shortcut.windows : shortcut.mac;
         const keysMatch = keys.join(" ").toLowerCase().includes(trimmed);
@@ -47,5 +50,5 @@ export function useShortcutFilter(
     }
 
     return filtered;
-  }, [categories, query, os]);
+  }, [categories, query, os, language]);
 }
