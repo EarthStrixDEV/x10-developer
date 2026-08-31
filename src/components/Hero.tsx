@@ -32,19 +32,19 @@ export function Hero({
       {/* Decorative clay blobs — purely atmospheric, aria-hidden */}
       <div
         aria-hidden="true"
-        className="bg-orange/15 rounded-full pointer-events-none absolute -top-24 -right-20 h-72 w-72 blur-2xl sm:h-96 sm:w-96"
+        className="bg-violet-light/55 rounded-full pointer-events-none absolute -top-24 -right-20 h-72 w-72 blur-2xl sm:h-96 sm:w-96"
       />
       <div
         aria-hidden="true"
-        className="bg-cream-dark/70 rounded-full pointer-events-none absolute top-40 -left-24 h-64 w-64 blur-2xl sm:h-80 sm:w-80"
+        className="bg-mint-light/50 rounded-full pointer-events-none absolute top-40 -left-24 h-64 w-64 blur-2xl sm:h-80 sm:w-80"
       />
       <div
         aria-hidden="true"
-        className="border-orange/25 pointer-events-none absolute top-14 right-[12%] hidden h-16 w-16 -rotate-12 rounded-clay-lg border-[3px] sm:block"
+        className="border-pink/40 pointer-events-none absolute top-14 right-[12%] hidden h-16 w-16 -rotate-12 rounded-clay-lg border-[3px] sm:block"
       />
       <div
         aria-hidden="true"
-        className="bg-orange/20 pointer-events-none absolute bottom-8 left-[8%] hidden h-10 w-10 rotate-12 rounded-clay-sm sm:block"
+        className="bg-orange/35 pointer-events-none absolute bottom-8 left-[8%] hidden h-10 w-10 rotate-12 rounded-clay-sm sm:block"
       />
 
       <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-8 text-center">

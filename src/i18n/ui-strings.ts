@@ -30,6 +30,16 @@ export interface UIStrings {
   navOpenMenu: string;
   navCloseMenu: string;
   languageSwitcherAriaLabel: string;
+  browseByCategory: string;
+  viewAllAffordance: string;
+  categoryShortcutCount: (count: number) => string;
+  breadcrumbHome: string;
+  previousLabel: string;
+  nextLabel: string;
+  categoryFilterPlaceholder: string;
+  categoryNotFoundTitle: string;
+  categoryNotFoundBody: string;
+  backToHome: string;
 }
 
 // Real, current English copy — extracted verbatim from Hero.tsx,
@@ -60,6 +70,16 @@ const en: UIStrings = {
   navOpenMenu: "Open menu",
   navCloseMenu: "Close menu",
   languageSwitcherAriaLabel: "Language",
+  browseByCategory: "Browse by category",
+  viewAllAffordance: "view all",
+  categoryShortcutCount: (count) => `${count} shortcuts`,
+  breadcrumbHome: "Home",
+  previousLabel: "Previous",
+  nextLabel: "Next",
+  categoryFilterPlaceholder: "Filter within this category...",
+  categoryNotFoundTitle: "Category not found",
+  categoryNotFoundBody: "That category doesn't exist. Let's get you back on track.",
+  backToHome: "Back to home",
 };
 
 /**
@@ -104,6 +124,16 @@ const th: UIStrings = {
   navOpenMenu: "เปิดเมนู",
   navCloseMenu: "ปิดเมนู",
   languageSwitcherAriaLabel: "ภาษา",
+  browseByCategory: "เรียกดูตามหมวดหมู่",
+  viewAllAffordance: "ดูทั้งหมด",
+  categoryShortcutCount: (count) => `${count} คีย์ลัด`,
+  breadcrumbHome: "หน้าแรก",
+  previousLabel: "ก่อนหน้า",
+  nextLabel: "ถัดไป",
+  categoryFilterPlaceholder: "กรองภายในหมวดหมู่นี้...",
+  categoryNotFoundTitle: "ไม่พบหมวดหมู่นี้",
+  categoryNotFoundBody: "ไม่พบหมวดหมู่ที่คุณค้นหา กลับไปเริ่มต้นใหม่กันเถอะ",
+  backToHome: "กลับหน้าแรก",
 };
 
 export const UI_STRINGS: Record<Language, UIStrings> = {

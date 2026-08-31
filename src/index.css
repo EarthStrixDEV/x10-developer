@@ -24,6 +24,32 @@
   --color-charcoal: #3a3a3a;
   --color-charcoal-dark: #2e2c2a;
 
+  /* Violet accent family (category color-coding) */
+  --color-violet-light: #cdbdfb;
+  --color-violet: #8b6ef2;
+  --color-violet-dark: #6c4de0;
+
+  /* Mint accent family (category color-coding) */
+  --color-mint-light: #b7f0d6;
+  --color-mint: #4fceA0;
+  --color-mint-dark: #2fa87f;
+
+  /* Pink accent family (category color-coding) */
+  --color-pink-light: #ffc9d9;
+  --color-pink: #ff7fa3;
+  --color-pink-dark: #e85585;
+
+  /*
+    Fixed-ink text color for content sitting on the pale-accent
+    (violet/mint/pink -light) category cards. Unlike --color-charcoal-*,
+    this is NEVER remapped in dark mode — those accent backgrounds stay
+    fixed/pale in both themes (see the dark-mode block below), so text on
+    top of them needs to stay dark too, or it becomes unreadable near-white
+    text on a still-pale card once charcoal flips to a light value.
+  */
+  --color-accent-ink: #3a3530;
+  --color-accent-ink-light: #6b6862;
+
   /* Clay radii — soft putty shapes, 24-32px range */
   --radius-clay-sm: 18px;
   --radius-clay: 24px;
@@ -67,6 +93,11 @@
   --color-charcoal-light: #e8dcc8; /* secondary/muted text — reuses existing --color-cream-dark */
   --color-charcoal-dark: #fffaf1; /* brightest text stop, for any element wanting max contrast */
 }
+
+/*
+  Violet, mint, and pink are intentionally NOT overridden in dark mode —
+  same fixed-accent treatment as orange above.
+*/
 
 /*
   Clay shadow system: a dark shadow sits to the bottom-right, a light
@@ -181,6 +212,22 @@
 [data-lang="ja"] {
   --font-sans: "Noto Sans JP", "Figtree", system-ui, sans-serif;
   --font-display: "Noto Sans JP", "Fraunces", serif;
+}
+
+/*
+  Hides the scrollbar track/thumb on the NavBar's horizontally-scrolling
+  category strip (src/components/NavBar.tsx) while keeping the element
+  scrollable via wheel/touch/drag — the strip only overflows by a few
+  sub-pixels in most viewports, so a visible scrollbar reads as a layout
+  glitch rather than an intentional affordance.
+*/
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 * {

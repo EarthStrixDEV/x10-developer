@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { OSToggle } from "./OSToggle";
@@ -75,24 +76,24 @@ export function NavBar({ categories, os, onOsChange }: NavBarProps) {
   const navLabels = NAV_LABELS[language];
 
   return (
-    <header className="bg-cream/85 sticky top-0 z-40 overflow-x-hidden backdrop-blur-md">
+    <header className="bg-cream/85 sticky top-0 z-40 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#top" className="shrink-0" aria-label={t.navBackToTop}>
+        <Link to="/" className="shrink-0" aria-label={t.navBackToTop}>
           <Logo />
-        </a>
+        </Link>
 
         <nav
           aria-label={t.navCategorySections}
-          className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto lg:flex"
+          className="scrollbar-hide hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto lg:flex"
         >
           {categories.map((category) => (
-            <a
+            <Link
               key={category.id}
-              href={`#${category.id}`}
+              to={`/category/${category.id}`}
               className="text-charcoal-light hover:text-charcoal hover:bg-cream-dark/60 rounded-clay-sm px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-200"
             >
               {navLabels[category.id] ?? category.title}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -135,14 +136,14 @@ export function NavBar({ categories, os, onOsChange }: NavBarProps) {
             />
             <LanguageSwitcher />
             {categories.map((category) => (
-              <a
+              <Link
                 key={category.id}
-                href={`#${category.id}`}
+                to={`/category/${category.id}`}
                 onClick={() => setMenuOpen(false)}
                 className="text-charcoal hover:bg-cream-dark/60 rounded-clay-sm px-3 py-2.5 text-sm font-medium transition-colors duration-200"
               >
                 {category.title}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
